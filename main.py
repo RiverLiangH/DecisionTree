@@ -28,9 +28,30 @@ if __name__ == '__main__':
     X_train, y_train, means, std_devs, X_test, y_test = data_handler(train_data, test_data)
     logging.info('Preprocess Data Done')
 
+    # Call data_handler
+    X_train, y_train, means, std_devs, X_test, y_test = data_handler(train_data, test_data)
+
+    # # 打印 X_train 和 y_train 的前 3 行
+    # print("X_train 前 3 行:")
+    # for i in range(3):
+    #     print(f"第 {i + 1} 行: {X_train[i]}")
+    #
+    # print("\ny_train 前 3 行:")
+    # for i in range(3):
+    #     print(f"第 {i + 1} 行: {y_train[i]}")
+    #
+    # # 打印 X_test 和 y_test 的前 3 行
+    # print("\nX_test 前 3 行:")
+    # for i in range(3):
+    #     print(f"第 {i + 1} 行: {X_test[i]}")
+    #
+    # print("\ny_test 前 3 行:")
+    # for i in range(3):
+    #     print(f"第 {i + 1} 行: {y_test[i]}")
+
     # Instance Model
     logging.info('Building Decision Tree...')
-    tree = DecisionTreeClassifier(max_depth=15)
+    tree = DecisionTreeClassifier(max_depth=50)
 
     # Train Model
     tree.fit(X_train, y_train)
@@ -44,17 +65,25 @@ if __name__ == '__main__':
     logging.info('Predicting...')
     y_pred = tree.predict(X_test)
 
+    y_pred = [pred.replace('.', '').strip() for pred in y_pred]
+    y_test = [test.replace('.', '').strip() for test in y_test]
+
     # Evaluation Part
-    print_hi('Evaluation')
+    for i in range(3):
+        print(f"第 {i + 1} 行: {y_pred[i]}")
+
+    print("-----------------------------------")
+    for i in range(3):
+        print(f"第 {i + 1} 行: {y_test[i]}")
 
     # Compute and output Accuracy
     accuracy = accuracy_score(y_test, y_pred)
-    print(f"Accuracy: {accuracy:.2f}")
+    print(f"Accuracy: {accuracy:.5f}")
 
-    # # Compute and output Confusion Matrix
-    # conf_matrix = confusion_matrix(y_test, y_pred)
-    # print("Confusion Matrix:")
-    # print(conf_matrix)
+    # Compute and output Confusion Matrix
+    conf_matrix = confusion_matrix(y_test, y_pred)
+    print("Confusion Matrix:")
+    print(conf_matrix)
 
     # Compute and output Precision, Recall and F1-Score
     precision, recall, f1 = precision_recall_f1(y_test, y_pred)

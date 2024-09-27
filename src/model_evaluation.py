@@ -25,20 +25,31 @@ def confusion_matrix(y_true, y_pred):
 
 def precision_recall_f1(y_true, y_pred):
     """
-    Comupute Precision, Recall and F1-score
+    Compute Precision, Recall, and F1-score.
     """
-    classes = np.unique(y_true)
+    # Get the unique classes from both y_true and y_pred
+    classes = np.unique(np.concatenate([y_true, y_pred]))
+
+    # Initialize true positives, false positives, and false negatives
     tp = np.zeros(len(classes), dtype=int)  # True Positive
     fp = np.zeros(len(classes), dtype=int)  # False Positive
     fn = np.zeros(len(classes), dtype=int)  # False Negative
 
-    for i in range(len(y_true)):
-        if y_true[i] == y_pred[i]:
-            tp[y_true[i]] += 1
-        else:
-            fp[y_pred[i]] += 1
-            fn[y_true[i]] += 1
+    # Create a mapping from class labels to indices
+    class_to_idx = {cls: idx for idx, cls in enumerate(classes)}
 
+    # Count tp, fp, fn
+    for i in range(len(y_true)):
+        true_idx = class_to_idx[y_true[i]]
+        pred_idx = class_to_idx[y_pred[i]]
+
+        if y_true[i] == y_pred[i]:
+            tp[true_idx] += 1
+        else:
+            fp[pred_idx] += 1
+            fn[true_idx] += 1
+
+    # Compute precision, recall, and F1-score
     precision = np.divide(tp, tp + fp, out=np.zeros_like(tp, dtype=float), where=(tp + fp) != 0)
     recall = np.divide(tp, tp + fn, out=np.zeros_like(tp, dtype=float), where=(tp + fn) != 0)
     f1 = 2 * np.divide(precision * recall, precision + recall, out=np.zeros_like(precision, dtype=float),
