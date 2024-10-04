@@ -3,6 +3,8 @@ from src.decision_tree import DecisionTreeClassifier
 from src.utils import data_handler, load_data
 import logging
 import pickle
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
 
 # Configure Logging
 logging.basicConfig(level=logging.DEBUG,
@@ -28,27 +30,6 @@ if __name__ == '__main__':
     X_train, y_train, means, std_devs, X_test, y_test = data_handler(train_data, test_data)
     logging.info('Preprocess Data Done')
 
-    # Call data_handler
-    X_train, y_train, means, std_devs, X_test, y_test = data_handler(train_data, test_data)
-
-    # # 打印 X_train 和 y_train 的前 3 行
-    # print("X_train 前 3 行:")
-    # for i in range(3):
-    #     print(f"第 {i + 1} 行: {X_train[i]}")
-    #
-    # print("\ny_train 前 3 行:")
-    # for i in range(3):
-    #     print(f"第 {i + 1} 行: {y_train[i]}")
-    #
-    # # 打印 X_test 和 y_test 的前 3 行
-    # print("\nX_test 前 3 行:")
-    # for i in range(3):
-    #     print(f"第 {i + 1} 行: {X_test[i]}")
-    #
-    # print("\ny_test 前 3 行:")
-    # for i in range(3):
-    #     print(f"第 {i + 1} 行: {y_test[i]}")
-
     # Instance Model
     logging.info('Building Decision Tree...')
     tree = DecisionTreeClassifier(max_depth=50)
@@ -68,13 +49,26 @@ if __name__ == '__main__':
     y_pred = [pred.replace('.', '').strip() for pred in y_pred]
     y_test = [test.replace('.', '').strip() for test in y_test]
 
-    # Evaluation Part
-    for i in range(3):
-        print(f"第 {i + 1} 行: {y_pred[i]}")
+    # # Evaluation Part
+    # for i in range(3):
+    #     print(f"第 {i + 1} 行: {y_pred[i]}")
+    #
+    # print("-----------------------------------")
+    # for i in range(3):
+    #     print(f"第 {i + 1} 行: {y_test[i]}")
 
-    print("-----------------------------------")
-    for i in range(3):
-        print(f"第 {i + 1} 行: {y_test[i]}")
+    # Output samples of prediction and ground truth.
+    print("Sample of true labels:", y_test[:10])  # 显示前10个真实标签
+    print("Sample of predicted labels:", y_pred[:10])  # 显示前10个预测标签
+
+    # Output statistics of classification
+    unique, counts = np.unique(y_test, return_counts=True)
+    print("True labels distribution:", dict(zip(unique, counts)))
+
+    unique_pred, counts_pred = np.unique(y_pred, return_counts=True)
+    print("Predicted labels distribution:", dict(zip(unique_pred, counts_pred)))
+
+    print("Type of y_test:", type(y_test[0]), "Type of y_pred:", type(y_pred[0]))
 
     # Compute and output Accuracy
     accuracy = accuracy_score(y_test, y_pred)

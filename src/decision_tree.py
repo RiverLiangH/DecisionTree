@@ -30,11 +30,11 @@ class DecisionTreeClassifier:
         self.tree = None
 
     def __getstate__(self):
-        # 返回要序列化的状态（只保存 max_depth 和 tree）
+        # Return the state to be serialized (only save max_depth and tree)
         return {'max_depth': self.max_depth, 'tree': self.tree}
 
     def __setstate__(self, state):
-        # 反序列化时设置状态
+        # Set the state during deserialization.
         self.max_depth = state['max_depth']
         self.tree = state['tree']
 

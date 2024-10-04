@@ -3,14 +3,23 @@ import numpy as np
 
 def accuracy_score(y_true, y_pred):
     """
-    计算模型的准确率：正确预测的数量除以总数量。
+    Compute the accuracy
     """
-    return np.sum(y_true == y_pred) / len(y_true)
+    # Ensure y_true and y_pred are numpy arrays
+    y_true = np.array(y_true)
+    y_pred = np.array(y_pred)
 
+    correct_predictions = np.sum(y_true == y_pred)
+    total_predictions = len(y_true)
+
+    print(f"Correct Predictions: {correct_predictions}")
+    print(f"Total Predictions: {total_predictions}")
+
+    return correct_predictions / total_predictions
 
 def confusion_matrix(y_true, y_pred):
     """
-    生成混淆矩阵，显示预测分类的正确与错误情况。
+    Generate Confusion Matrix
     """
     classes = np.unique(y_true)
     matrix = np.zeros((len(classes), len(classes)), dtype=int)
