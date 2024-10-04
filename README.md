@@ -16,9 +16,9 @@ decision_tree_project/
 │   ├── utils.py           # Utility functions (e.g., data loading, evaluation)
 │   └── model_evaluation.py # Code for model performance evaluation
 │
-├── notebooks/             # Jupyter notebooks for analysis (if applicable)
+├── notebooks/             # Jupyter notebooks for analysis
 │
-├── requirements.txt       # List of dependencies (optional)
+├── requirements.txt       # List of dependencies
 ├── README.md              # Project documentation
 └── main.py                # Script to run the model training and evaluation
 
