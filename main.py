@@ -3,8 +3,6 @@ from src.decision_tree import DecisionTreeClassifier
 from src.utils import data_handler, load_data
 import logging
 import pickle
-from sklearn.tree import plot_tree
-import matplotlib.pyplot as plt
 
 # Configure Logging
 logging.basicConfig(level=logging.DEBUG,
@@ -48,14 +46,6 @@ if __name__ == '__main__':
 
     y_pred = [pred.replace('.', '').strip() for pred in y_pred]
     y_test = [test.replace('.', '').strip() for test in y_test]
-
-    # # Evaluation Part
-    # for i in range(3):
-    #     print(f"第 {i + 1} 行: {y_pred[i]}")
-    #
-    # print("-----------------------------------")
-    # for i in range(3):
-    #     print(f"第 {i + 1} 行: {y_test[i]}")
 
     # Output samples of prediction and ground truth.
     print("Sample of true labels:", y_test[:10])  # 显示前10个真实标签
